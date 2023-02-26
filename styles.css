@@ -1,0 +1,186 @@
+/*01-reset*/
+/* (*)para todos os elementos */
+* {
+    /* margin e padding não influênciarem na largura dos elementos */
+    box-sizing: border-box;
+    /* tirar margin de todos os elementos */
+    margin: 0;
+    /* tirar padding de todos os elementos */
+    padding: 0;
+    font-family: sans-serif;
+}
+
+/*02-body*/
+body {
+    /* o body ocupar 100% da altura da tela */
+    height: 100vh;
+    /* o body ocupar 100% da largura da tela */
+    width: 100vw;
+    background: linear-gradient(40deg,
+            rgb(250, 250, 250)-40%,
+            rgb(3, 3, 3)100%);
+}
+
+/*03-board*/
+.board {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    /*centralizar todo conteúdo no centro*/
+    justify-content: center;
+    /*centrlizar todo conteúdo verticalmente no centro*/
+    align-content: center;
+    /*centralizar os conteúdos das células no centro*/
+    justify-items: center;
+    /*centralizar verticalmente os conteúdos das células no centro*/
+    align-items: center;
+    /*(auto)ocupa a largua que o conteúdo precisar*/
+    grid-template-columns: repeat(3, auto);
+}
+
+/*17-diminuir opacidade do hover*/
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.x .cell:not(.x):not(.circle):hover::before,
+/*19-diminuir a opacidade do hover*/
+.board.circle .cell:not(.x):not(.circle):hover::after,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+    background: rgba(3, 3, 3, 1) !important;
+}
+
+/*04-células*/
+.cell {
+    width: 100px;
+    height: 100px;
+    border: 2px solid white;
+    border-radius: 4px;
+    /* para tudo ficar alinhado dentro das celulas */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /*07-para posição do x ocupar espaço correto*/
+    position: relative;
+}
+
+/*10-para não aceitar click em células preenchidas*/
+.cell.x,
+.cell.circle {
+    cursor: not-allowed;
+}
+
+/*05-excluir bordas externas*/
+.cell:nth-child(1),
+.cell:nth-child(2),
+.cell:nth-child(3) {
+    border-top: none;
+}
+
+.cell:nth-child(1),
+.cell:nth-child(4),
+.cell:nth-child(7) {
+    border-left: none;
+}
+
+.cell:nth-child(3),
+.cell:nth-child(6),
+.cell:nth-child(9) {
+    border-right: none;
+}
+
+.cell:nth-child(7),
+.cell:nth-child(8),
+.cell:nth-child(9) {
+    border-bottom: none;
+}
+
+/*06-criar o x*/
+.cell.x::before,
+.cell.x::after,
+/*11-hover*/
+/*14-cell:not*/
+/*pegar todas as células da board x que não tenha a classe x e não tenha a classe circle e aplicar o hover*/
+.board.x .cell:not(.x):not(.circle):hover::after,
+.board.x .cell:not(.x):not(.circle):hover::before {
+    content: "";
+    height: calc(100px*0.15);
+    width: calc(100px * 0.9);
+    background: white;
+
+    /*08-para posição do x ocupar espaço correto*/
+    position: absolute;
+}
+
+.cell.x::before,
+/*12-hover*/
+/*15-cell:not*/
+.board.x .cell:not(.x):not(.circle):hover::before {
+    transform: rotate(45deg);
+}
+
+.cell.x::after,
+/*13-hover*/
+/*16-cell:not*/
+.board.x .cell:not(.x):not(.circle):hover::after {
+    transform: rotate(-45deg);
+}
+
+/*09-cria o circle*/
+.cell.circle::before,
+.cell.circle::after,
+/*18-cell:not*/
+.board.circle .cell:not(.x):not(.circle):hover::after,
+.board.circle .cell:not(.x):not(.circle):hover::before {
+    content: "";
+    height: calc(100px*0.9);
+    width: calc(100px * 0.9);
+    background: white;
+    position: absolute;
+    border-radius: 50%;
+}
+
+/*20-menssagem de vitória*/
+.winning-message {
+    /* none para só mostra no final do jogo(feito no JS) */
+    display: none;
+    /* para que uma div fugir do fluxo da página, se sobreponha e ocupe toda largura e altura do documento*/
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* centralizar tudo */
+    justify-content: center;
+    align-items: center;
+    /* cor de fundo preto trasparente */
+    background-color: rgb(0, 0, 0, 0.8);
+    /* deixar os itens um acima do outro */
+    flex-direction: column;
+}
+
+/* 21-button */
+.winning-message-button {
+    font-size: 2.5rem;
+    background-color: rgb(65, 185, 131, 1);
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    margin-top: 10px;
+    color: white;
+}
+
+/*22-button hover*/
+.winning-message-button:hover {
+    color: rgb(65, 185, 131, 1);
+    background-color: white;
+}
+
+/* 23-menssagem */
+.winning-message-text {
+    color: white;
+    font-size: 5rem;
+}
+
+.show-winning-message {
+    display: flex;
+}
